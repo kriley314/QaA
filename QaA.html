@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>TF Game</title>
+  </head>
+  <body>
+
+    <div id="theTest">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="jumbotron">
+                        <h2>Question: <span id="question"></span></h2>
+                        <h2>Number Right: <span id="rightAnswers"></span></h2>
+                        <h2>Number Wrong: <span id="wrongAnswers"></span></h2>
+                        <h2><span id="gradeComment"></span></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+          
+
+      <script type="text/javascript">
+
+      var aQuestions = [ { q: "The WHO was a rock band that redefined rock music in the 1960's. (t/f)", a:"t" },
+                         { q: "Betelgeuse, a member of the Orion Constellation, is a Red Giant. (t/f)", a:"t" },
+                         { q: "There were actually five members in our development team for this project. (t/f)", a:"t" },
+                         { q: "Brendan's BBQ is the best BBQ in the world. (t/f)", a:"t" },
+                         { q: "There are 48 states in the United States of America. (t/f)", a:"f" },
+                         { q: "George Washington was the first president of these United States. (t/f)", a:"t" },
+                         { q: "Christopher Columbus sailed the ocean blue in 1492. (t/f)", a:"t" },
+                         { q: "Texas’ independence day is March, 2nd, 1936. (t/f)", a:"f" },
+                         { q: "Humans from Earth first landed on the moon in 1867. (t/f)", a:"f" },
+                         { q: "Green is primary color. (t/f)", a:"t" } ];
+
+        
+        var nQIndex = 0;
+        var nRight = 0;
+        var nWrong = 0;
+
+        var screenQuestion = document.getElementById( "question" );
+        var screenNumRight = document.getElementById( "rightAnswers" );
+        var screenNumWrong = document.getElementById( "wrongAnswers" );
+        var screenGradeComment = document.getElementById( "gradeComment" );
+
+        function updateQuestionText() {
+            if ( nQIndex < aQuestions.length ) {
+              screenQuestion.textContent = aQuestions[ nQIndex ].q;
+            }
+            else {
+                screenQuestion.textContent = "";
+              if ( nRight == aQuestions.length ) {
+                screenGradeComment.textContent = "You RULE!!";
+              } else if ( nRight > 7 ) {
+                screenGradeComment.textContent = "Way to go!!  Only missed 1!!..";
+              } else if ( nRight > 0 ) {
+                screenGradeComment.textContent = "I've seen worse..";
+              } else {
+                screenGradeComment.textContent = "Uh...  Really??";
+              }
+            }
+
+            screenNumRight.textContent = nRight;
+            screenNumWrong.textContent = nWrong;
+        }
+
+        updateQuestionText();
+
+        // Next, we give JavaScript a function to execute when onkeyup event fires.
+        document.onkeyup = function(event) {
+          if (nQIndex === aQuestions.length ) {
+            return;
+          }
+
+          userText = event.key;
+
+          if ( userText === aQuestions[ nQIndex++ ].a ) {
+            nRight++;
+          } else {
+            nWrong++;
+
+            // And.. Just to check on things..
+            if (( userText != 't' ) && ( userText != 'f' )) {
+              console.log( "We are looking for answers of 't' or 'f'..  Your entry, '" + userText + "', is just being counted as wrong.." );
+            }
+          }
+
+          updateQuestionText();
+        }
+
+      </script>
+    </body>
+    </html>
+
+
